@@ -10,19 +10,19 @@ inp:    GETCHAR
         jz      mod_num
         inc     ecx
         jmp     inp
-mod_num:mov     eax,    ecx     ;prepare
-        mov     ecx,    esp
-        mov     ebx,    10
-dv_prt: xor     edx,    edx     ;begining of division
-        div     ebx
-        add     edx,    48
-        push    edx
-        cmp     eax,    0
-        jz      prnt
-        jmp     dv_prt
+mod_num:mov     eax,    ecx     ;put number in eax
+        mov     ecx,    esp     ;save es adress
+        mov     ebx,    10      ;put divider
+dv_prt: xor     edx,    edx     ;clear edx
+        div     ebx             ;division
+        add     edx,    48      ;add / to remainder
+        push    edx             ;push first number in stack
+        cmp     eax,    0       ;check zero
+        jz      prnt            ;go to print result
+        jmp     dv_prt          ;go to begining
 prnt:   pop     eax             ;print result
-        PUTCHAR al
-        cmp     ecx,    esp
-        jz      fin
+        PUTCHAR al              ;
+        cmp     ecx,    esp     ;check last character
+        jz      fin             ;if last char go to enf
         jmp     prnt
 fin:    FINISH
